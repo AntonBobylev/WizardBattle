@@ -16,7 +16,6 @@ public class Controller : MonoBehaviour
 
     private Vector3 direction;
     private float h, v;
-    private int layerMask;
     private Rigidbody body;
     private float rotationY;
     private float rotationX;
@@ -26,10 +25,6 @@ public class Controller : MonoBehaviour
         body = GetComponent<Rigidbody>();
         body.freezeRotation = true;
         gameObject.tag = "Player";
-
-        // объекту должен быть присвоен отдельный слой, для работы прыжка
-        layerMask = 1 << gameObject.layer | 1 << 2;
-        layerMask = ~layerMask;
     }
 
     void FixedUpdate()
@@ -37,13 +32,12 @@ public class Controller : MonoBehaviour
         body.AddForce(direction.normalized * acceleration * body.mass * speed);
 
         // Ограничение скорости, иначе объект будет постоянно ускоряться
-        if (Mathf.Abs(body.velocity.x) > speed)
+        if ((Mathf.Abs(body.velocity.x) + Mathf.Abs(body.velocity.z)) > speed)
         {
-            body.velocity = new Vector3(Mathf.Sign(body.velocity.x) * speed, body.velocity.y, body.velocity.z);
-        }
-        if (Mathf.Abs(body.velocity.z) > speed)
-        {
-            body.velocity = new Vector3(body.velocity.x, body.velocity.y, Mathf.Sign(body.velocity.z) * speed);
+            body.velocity = new Vector3(
+                body.velocity.x / (Mathf.Abs(body.velocity.x) + Mathf.Abs(body.velocity.z)) * speed,
+                body.velocity.y,
+                body.velocity.z / (Mathf.Abs(body.velocity.x) + Mathf.Abs(body.velocity.z)) * speed);
         }
     }
 
@@ -53,7 +47,7 @@ public class Controller : MonoBehaviour
 
         RaycastHit hit;
         Ray ray = new Ray(transform.position, Vector3.down);
-        if (Physics.Raycast(ray, out hit, jumpDistance, layerMask))
+        if (Physics.Raycast(ray, out hit, jumpDistance))
         {
             result = true;
         }
