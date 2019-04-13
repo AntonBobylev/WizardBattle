@@ -90,7 +90,9 @@ GameObject:
   - component: {fileID: 7660321850976533431}
   - component: {fileID: 7660321850976533428}
   - component: {fileID: 7660321850976533430}
+  - component: {fileID: 3601966363704743894}
   - component: {fileID: 7660321850976533385}
+  - component: {fileID: 8433414742436988560}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -171,6 +173,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3601966363704743894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7660321850976533426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47025e0be816c9644a1fed99a750397c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 100
+  Health: 100
+  healthBarLength: 0
 --- !u!136 &7660321850976533385
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -186,6 +203,24 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8433414742436988560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7660321850976533426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c902589f43773f64db2866d19bbce5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KeyBeginMagic: 103
+  KeyFire: 49
+  FireProjecile: {fileID: 0}
+  Spawn: {fileID: 0}
+  FireRate: 0.5
+  NextFire: 0
 --- !u!1 &7660321851423239918
 GameObject:
   m_ObjectHideFlags: 0

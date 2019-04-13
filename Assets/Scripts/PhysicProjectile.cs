@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PhysicProjectile : MonoBehaviour
 {
-    Vector3 lastPos;
+    Vector3 lastPos = new Vector3(0.0f,0.0f,0.0f);
     float Speed = 15.0f;
     // Start is called before the first frame update
     void Start()
@@ -26,10 +26,12 @@ public class PhysicProjectile : MonoBehaviour
                 print(hit.transform.name);
                 Destroy(gameObject);
             }
+            if (hit.transform.name == "Enemy")
+            {
+                GameObject.FindWithTag("Enemy").GetComponent<EnemyHealth>().Health -= 60f;
+            }
         }
 
         lastPos = transform.position;
-
-        //transform.position += transform.forward * Speed * Time.deltaTime;
     }
 }
