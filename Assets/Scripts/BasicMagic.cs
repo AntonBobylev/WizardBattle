@@ -8,8 +8,8 @@ public class BasicMagic : MonoBehaviour
 
     public KeyCode KeyBeginMagic = KeyCode.G;
     public KeyCode KeyFire = KeyCode.Alpha1;
-    public GameObject FireProjecile;
-    public Transform Spawn;
+   // public GameObject FireProjecile;
+   // public Transform Spawn;
     public float FireRate = 0.5f;
     public float NextFire = 0.0f;
     int phase = 0;
@@ -164,7 +164,7 @@ public class BasicMagic : MonoBehaviour
             Debug.Log("Not loaded");
         }
         
-        GameObject.Instantiate(ball, Spawn.position, Spawn.rotation);
+        GameObject.Instantiate(ball, transform.position,capsule.transform.rotation);
     }//Создание снаряда
     void CreateAuraProjectile()//Создание взрыва вокруг себя
     {
