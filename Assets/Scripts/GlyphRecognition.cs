@@ -3,23 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-class CharacterPoint
+class GlyphPoint
 {
     public Vector2 vector = new Vector2(0,0);
     public float angle = 0.0f;
-    public CharacterPoint(Vector3 _vec, float _angle)
+    public GlyphPoint(Vector3 _vec, float _angle)
     {
         vector = _vec;
         angle = _angle;
     }
-
-    public double getDifference(CharacterPoint cp)
+    public double getDifference(GlyphPoint cp)
     {//разница идет в пикселях  
         double difference = 0;
-        difference = vector.magnitude - cp.vector.magnitude;
-        return Math.Abs(difference);
+        difference += Math.Abs(vector.magnitude - cp.vector.magnitude);
+        difference += Math.Abs(angle-cp.angle);
+        return difference;
     }
-
     override
     public string ToString()
     {
@@ -27,34 +26,33 @@ class CharacterPoint
     }
 }
 
-public class CharacterRecognition: MonoBehaviour
+public class GlyphRecognition: MonoBehaviour
 {
     public KeyCode writeButton = KeyCode.C; // клавиша для прыжка
     public KeyCode createButton = KeyCode.V; // клавиша для прыжка
     public int pointsCount = 100;
-    private List<CharacterPoint> defCharacter = new List<CharacterPoint>();
-    private List<CharacterPoint> writeCharacter = new List<CharacterPoint>();
+    private List<GlyphPoint> exampleGlyph = new List<GlyphPoint>();
+    private List<GlyphPoint> inputGlyph = new List<GlyphPoint>();
 
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(CreateDefaultCorontine());
+        StartCoroutine(DrawGlyph());
     }
-
-    IEnumerator CreateDefaultCorontine()
+    IEnumerator DrawGlyph()
     {
-        List<CharacterPoint> cpList;
+        List<GlyphPoint> cpList;
         KeyCode controlButton;
         if (Input.GetKeyDown(createButton))
         {
-            defCharacter.Clear();
-            cpList = defCharacter;
+            exampleGlyph.Clear();
+            cpList = exampleGlyph;
             controlButton = createButton;
         }
         else if(Input.GetKeyDown(writeButton))
         {
-            writeCharacter.Clear();
-            cpList = writeCharacter;
+            inputGlyph.Clear();
+            cpList = inputGlyph;
             controlButton = writeButton;
         }
         else
@@ -70,23 +68,23 @@ public class CharacterRecognition: MonoBehaviour
         if(screenDots.Count != 0)
         {
             NormaliseDots(screenDots);
-            cpList.Add(new CharacterPoint(new Vector2(1,1), 0.0f));
+            cpList.Add(new GlyphPoint(new Vector2(1,1), 0.0f));
             for (int i = 1; i < screenDots.Count; i++)
             {
                 Vector2 tmpVec = screenDots[i] - screenDots[i - 1];
                 Vector2 lastVec = cpList[cpList.Count - 1].vector;
-                //некорректно считается угол
-                float angle = (float)Math.Acos((tmpVec.x * lastVec.x + tmpVec.y * lastVec.y) / Math.Sqrt(tmpVec.sqrMagnitude * lastVec.sqrMagnitude));
-                cpList.Add(new CharacterPoint(tmpVec, angle));
+                float cosA = (tmpVec.x * lastVec.x + tmpVec.y * lastVec.y) / (tmpVec.magnitude * lastVec.magnitude);
+                float angle = (float)(Math.Acos(cosA) * 180 / Math.PI);
+                if (float.IsNaN(angle)) angle = 0;
+                cpList.Add(new GlyphPoint(tmpVec, angle));
             }
-            if(cpList == writeCharacter)
+            if(cpList == inputGlyph)
             {
-                Debug.Log(ProcessCharacter(writeCharacter, defCharacter));
+                Debug.Log(ProcessCharacter(inputGlyph, exampleGlyph));
                 yield break;
             }
         }
     }
-
     void NormaliseDots(List<Vector2> list)
     {
         while (list.Count > pointsCount)
@@ -119,10 +117,7 @@ public class CharacterRecognition: MonoBehaviour
             list.Insert(maxIndex, list[maxIndex] - maxRange / 2);
         }
     }
-
-    
-
-    double ProcessCharacter(List<CharacterPoint> list, List<CharacterPoint> example)
+    double ProcessCharacter(List<GlyphPoint> list, List<GlyphPoint> example)
     {
         double difference = 0;
         for (int i = 0; i<pointsCount; i++)
