@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 575910716431540833}
   - component: {fileID: 6685784677423874176}
   - component: {fileID: 3588735679004852580}
+  - component: {fileID: 7896619970843004441}
   m_Layer: 0
   m_Name: FireBallTrigger
   m_TagString: FireBall
@@ -91,6 +92,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: -0.0000009536743, z: 0.00024414062}
+--- !u!114 &7896619970843004441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3365265381855071493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694fbf626d961ef4f8229b2aac1e607e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  HitValue: 5
+  timer: 1
 --- !u!1 &5165772877089065540
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +120,8 @@ GameObject:
   - component: {fileID: 5165772877089065536}
   - component: {fileID: 5165772877089064382}
   - component: {fileID: 5165772877089065538}
-  - component: {fileID: 8659359329110935943}
+  - component: {fileID: 2327284753606343077}
+  - component: {fileID: 1892715181350225271}
   m_Layer: 0
   m_Name: FireProjectile
   m_TagString: FireBall
@@ -200,7 +217,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8659359329110935943
+--- !u!114 &2327284753606343077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,6 +226,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 5165772877089065540}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34ac39bf9edf98f47b88526228f078ff, type: 3}
+  m_Script: {fileID: 11500000, guid: c2621284130e1dd4f9b7c8494b33cb69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: 
+--- !u!135 &1892715181350225271
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5165772877089065540}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.69
+  m_Center: {x: 0, y: 0, z: 0}

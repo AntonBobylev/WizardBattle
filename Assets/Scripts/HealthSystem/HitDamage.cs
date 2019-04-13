@@ -24,12 +24,6 @@ public class HitDamage : MonoBehaviour
         }
     } 
 
-    void OnTriggerEnter(Collider other)
-    {
-        
-            
-    }
-
     void Update()
     {
 

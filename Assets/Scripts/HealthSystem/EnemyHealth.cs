@@ -18,6 +18,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void AddJustCurrentHealth(int odj)
     {
+       // Debug.Log("ZASHEL");
         Health += odj;
         if (Health < 1.0f)
             Health = 0.0f;
