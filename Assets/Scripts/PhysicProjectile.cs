@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PhysicProjectile : MonoBehaviour
 {
-    Vector3 lastPos;
+    Vector3 lastPos = new Vector3(0.0f,0.0f,0.0f);
     float Speed = 15.0f;
     // Start is called before the first frame update
     void Start()
