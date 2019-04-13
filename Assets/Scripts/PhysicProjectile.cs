@@ -20,9 +20,10 @@ public class PhysicProjectile : MonoBehaviour
         Debug.DrawLine(lastPos, transform.position);
         if(Physics.Linecast(lastPos,transform.position,out hit))
         {
-            print(hit.transform.name);
-            if(gameObject)
+            
+            if(gameObject && hit.transform.name!="FireProjectile(Clone)")
             {
+                print(hit.transform.name);
                 Destroy(gameObject);
             }
         }
