@@ -7,15 +7,12 @@ public class BasicMagic : MonoBehaviour
 {
 
     public KeyCode KeyBeginMagic = KeyCode.G;
-    public KeyCode KeyFire = KeyCode.Alpha1;
-   // public GameObject FireProjecile;
-   // public Transform Spawn;
-    public float FireRate = 0.5f;
-    public float NextFire = 0.0f;
-    int phase = 0;
-    int Element = 0;
-    int Form = 0;
-    int Range = 0;
+    private int phase = 0;
+    private int Element = 0;
+    private int Form = 0;
+    private int Range = 0;
+    private float RangeRegionDamage = 6.0f;//Размер взрыва
+    private float RangeStreamDamage = 6.0f;//Длина потока
     GameObject capsule;
 
     // Start is called before the first frame update
@@ -164,16 +161,18 @@ public class BasicMagic : MonoBehaviour
             Debug.Log("Not loaded");
         }
         
-        GameObject.Instantiate(ball, transform.position,capsule.transform.rotation);
+        GameObject.Instantiate(ball, transform.position + new Vector3(0.0f,0.0f,0.5f),capsule.transform.rotation);
     }//Создание снаряда
     void CreateAuraProjectile()//Создание взрыва вокруг себя
     {
-        RaycastHit hit;
-        Vector3 pos = transform.position;
-        if (Physics.SphereCast(pos, 6.0f, transform.forward, out hit, 6)&&Input.GetKeyDown(KeyCode.Mouse0))
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, RangeRegionDamage);
+        int i = 0;
+        while (i < hitColliders.Length)
         {
-            print("Found an object " + hit.transform.name + "distance: " + hit.distance);
+            print(hitColliders[i].transform.name);
+            i++;
         }
+        print("BA-DA-BUM");
     }
     IEnumerator CreateStream()//Создание потока
     {
@@ -181,7 +180,7 @@ public class BasicMagic : MonoBehaviour
         RaycastHit hit;
         while (Input.GetKey(KeyCode.Mouse0))
         {
-            if (Physics.Raycast(transform.position, capsule.transform.forward, out hit, 6.0f))
+            if (Physics.Raycast(transform.position, capsule.transform.forward, out hit, RangeStreamDamage))
             {
                 print("Found an object " + hit.transform.name + "distance: " + hit.distance);
             }
