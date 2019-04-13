@@ -26,10 +26,12 @@ public class PhysicProjectile : MonoBehaviour
                 print(hit.transform.name);
                 Destroy(gameObject);
             }
+            if (hit.transform.name == "Enemy")
+            {
+                GameObject.FindWithTag("Enemy").GetComponent<EnemyHealth>().Health -= 60f;
+            }
         }
 
         lastPos = transform.position;
-
-        //transform.position += transform.forward * Speed * Time.deltaTime;
     }
 }
