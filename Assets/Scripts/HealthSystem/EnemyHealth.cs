@@ -14,6 +14,12 @@ public class EnemyHealth : MonoBehaviour
     void Update()
     {
         AddJustCurrentHealth(0);
+        if(this.Health <=0)
+        {
+            //Анимация смерти
+            //Через некоторое время
+            Destroy(gameObject);
+        }
     }
 
     public void AddJustCurrentHealth(int odj)

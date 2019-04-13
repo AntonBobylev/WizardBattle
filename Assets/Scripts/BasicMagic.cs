@@ -11,7 +11,7 @@ public class BasicMagic : MonoBehaviour
     private int Element = 0;
     private int Form = 0;
     private int Range = 0;
-    private float RangeRegionDamage = 6.0f;//Размер взрыва
+    private float RangeRegionDamage = 10.0f;//Размер взрыва
     private float RangeStreamDamage = 6.0f;//Длина потока
     GameObject capsule;
 
@@ -152,6 +152,7 @@ public class BasicMagic : MonoBehaviour
             yield return null;
         }
     }
+    //Создание снаряда
     void CreateProjectile()
     {
         // Object ball =  Resources.Load(GameObject.FindWithTag("FireBall").name);
@@ -162,19 +163,25 @@ public class BasicMagic : MonoBehaviour
         }
         
         GameObject.Instantiate(ball, transform.position + new Vector3(0.0f,0.0f,0.5f),capsule.transform.rotation);
-    }//Создание снаряда
-    void CreateAuraProjectile()//Создание взрыва вокруг себя
+    }
+    //Создание взрыва вокруг себя
+    void CreateAuraProjectile()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, RangeRegionDamage);
         int i = 0;
         while (i < hitColliders.Length)
         {
             print(hitColliders[i].transform.name);
+            if(hitColliders[i].transform.name == "Enemy")
+            {
+                GameObject.FindWithTag("Enemy").GetComponent<EnemyHealth>().Health -= 20f;
+            }
             i++;
         }
         print("BA-DA-BUM");
     }
-    IEnumerator CreateStream()//Создание потока
+    //Создание потока
+    IEnumerator CreateStream()
     {
         
         RaycastHit hit;
@@ -183,6 +190,10 @@ public class BasicMagic : MonoBehaviour
             if (Physics.Raycast(transform.position, capsule.transform.forward, out hit, RangeStreamDamage))
             {
                 print("Found an object " + hit.transform.name + "distance: " + hit.distance);
+                if(hit.transform.name == "Enemy")
+                {
+                    GameObject.FindWithTag("Enemy").GetComponent<EnemyHealth>().Health -= 0.2f;
+                }
             }
             yield return null;
         }
