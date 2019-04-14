@@ -162,7 +162,7 @@ public class BasicMagic : MonoBehaviour
             Debug.Log("Not loaded");
         }
         
-        GameObject.Instantiate(ball, transform.position + new Vector3(0.0f,0.0f,0.5f),capsule.transform.rotation);
+        GameObject.Instantiate(ball, capsule.transform.position + capsule.transform.forward * 0.8f,capsule.transform.rotation);
     }
     //Создание взрыва вокруг себя
     void CreateAuraProjectile()

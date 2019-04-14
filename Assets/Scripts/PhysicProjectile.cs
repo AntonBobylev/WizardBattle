@@ -23,15 +23,14 @@ public class PhysicProjectile : MonoBehaviour
             
             if(gameObject && hit.transform.name!="FireProjectile(Clone)")
             {
+                if (hit.transform.name == "Enemy")
+                {
+                    GameObject.FindWithTag("Enemy").GetComponent<EnemyHealth>().Health -= 60f;
+                }
                 print(hit.transform.name);
                 Destroy(gameObject);
             }
-            if (hit.transform.name == "Enemy")
-            {
-                GameObject.FindWithTag("Enemy").GetComponent<EnemyHealth>().Health -= 60f;
-            }
         }
-
         lastPos = transform.position;
     }
 }
