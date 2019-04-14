@@ -54,7 +54,7 @@ public class FollowingCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        if (player)
+        if (player && !Input.GetKey(KeyCode.C) && !Input.GetKey(KeyCode.V))
         {
             if (inversionX == InversionX.Disabled) inversX = 1; else inversX = -1;
             if (inversionY == InversionY.Disabled) inversY = -1; else inversY = 1;

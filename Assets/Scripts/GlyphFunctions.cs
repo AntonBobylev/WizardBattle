@@ -29,7 +29,7 @@ public static class GlyphFunctions
     private static void CreateShield(GameObject whoami)
     {
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        Vector3 vec = whoami.transform.position + whoami.transform.TransformVector(whoami.transform.Find("Model").forward) * 2;
+        Vector3 vec = whoami.transform.position + whoami.transform.TransformVector(whoami.transform.Find("Capsule").forward) * 2;
         cube.transform.position = vec;
         GameObject.Destroy(cube, 3);
     }

@@ -26,7 +26,7 @@ public class Simple_Magik_Key : MonoBehaviour
     {
         // Object ball =  Resources.Load(GameObject.FindWithTag("FireBall").name);
         Object ball = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Skill1.prefab", typeof(GameObject));
-        Animation.Crossfade
+        
         if (!ball)
         {
             Debug.Log("Not loaded");
