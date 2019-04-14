@@ -8,7 +8,6 @@ public class EnemyFieldOfView : MonoBehaviour
     public GameObject Enemy;
     private bool timer_go = false;
     public float timer;//для потери перса из виду
-    private bool yes = false;
     private float new_timer;
     EnemyPatrol EnemyPatrolScript;
     ToPlayer ToPlayerScript;
@@ -22,11 +21,7 @@ public class EnemyFieldOfView : MonoBehaviour
         new_timer = timer;
     }
 
-    void OnTriggerStay(Collider other)
-    {
-        yes = true;
-        Enemy.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = true;
-    }
+   
 
     void OnTriggerEnter(Collider other)
     {
@@ -41,7 +36,6 @@ public class EnemyFieldOfView : MonoBehaviour
             {
                 timer_go = false;
                 timer = new_timer;
-                yes = true;
                 Enemy.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = true;
                 //сюда анимацию ходьбы
                 //Enemy.GameObject.GetComponent<Animator>().SetTrigger("Walk");
@@ -54,7 +48,6 @@ public class EnemyFieldOfView : MonoBehaviour
     
     void OnTriggerExit(Collider other)
     {
-        yes = false;
         timer_go = true;
     }
     
@@ -81,7 +74,7 @@ public class EnemyFieldOfView : MonoBehaviour
             EnemyPatrolScript.enabled = true;
             Enemy.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>().ResetPath();
 
-            yes = false;
+            
             timer = new_timer;
             //сюда анимацию idle
             //Enemy.GameObject.GetComponent<Animator>().SetTrigger("Idle");

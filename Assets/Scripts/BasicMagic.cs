@@ -11,14 +11,14 @@ public class BasicMagic : MonoBehaviour
     private int Element = 0;
     private int Form = 0;
     private int Range = 0;
-    private float RangeRegionDamage = 10.0f;//Размер взрыва
+    private float RangeRegionDamage = 6.0f;//Размер взрыва
     private float RangeStreamDamage = 6.0f;//Длина потока
-    GameObject capsule;
+    GameObject Player;
 
     // Start is called before the first frame update
     void Start()
     {
-        capsule = GameObject.Find("Capsule");
+        Player = GameObject.Find("Player");
     }
     IEnumerator StartCastMagicElement()
     {
@@ -152,48 +152,37 @@ public class BasicMagic : MonoBehaviour
             yield return null;
         }
     }
-    //Создание снаряда
     void CreateProjectile()
     {
         // Object ball =  Resources.Load(GameObject.FindWithTag("FireBall").name);
-        Object ball = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/FireProjectile.prefab", typeof(GameObject));
+        Object ball = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Skill1.prefab", typeof(GameObject));
         if(!ball)
         {
             Debug.Log("Not loaded");
         }
         
-        GameObject.Instantiate(ball, capsule.transform.position + capsule.transform.forward * 0.8f,capsule.transform.rotation);
-    }
-    //Создание взрыва вокруг себя
-    void CreateAuraProjectile()
+        GameObject.Instantiate(ball, transform.position + new Vector3(0.0f,0.0f,0.5f),Player.transform.rotation);
+    }//Создание снаряда
+    void CreateAuraProjectile()//Создание взрыва вокруг себя
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, RangeRegionDamage);
         int i = 0;
         while (i < hitColliders.Length)
         {
             print(hitColliders[i].transform.name);
-            if(hitColliders[i].transform.name == "Enemy")
-            {
-                GameObject.FindWithTag("Enemy").GetComponent<EnemyHealth>().Health -= 20f;
-            }
             i++;
         }
         print("BA-DA-BUM");
     }
-    //Создание потока
-    IEnumerator CreateStream()
+    IEnumerator CreateStream()//Создание потока
     {
         
         RaycastHit hit;
         while (Input.GetKey(KeyCode.Mouse0))
         {
-            if (Physics.Raycast(transform.position, capsule.transform.forward, out hit, RangeStreamDamage))
+            if (Physics.Raycast(transform.position, Player.transform.forward, out hit, RangeStreamDamage))
             {
                 print("Found an object " + hit.transform.name + "distance: " + hit.distance);
-                if(hit.transform.name == "Enemy")
-                {
-                    GameObject.FindWithTag("Enemy").GetComponent<EnemyHealth>().Health -= 0.2f;
-                }
             }
             yield return null;
         }
