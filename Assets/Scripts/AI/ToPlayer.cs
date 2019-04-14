@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ToPlayer : MonoBehaviour
 {
+    public Vector3 dist;
     public Transform target;
     UnityEngine.AI.NavMeshAgent agent;
 
@@ -17,6 +18,8 @@ public class ToPlayer : MonoBehaviour
     void Update()
     {
         if(agent.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled == true)
-            agent.SetDestination(target.position);
+        {
+                agent.SetDestination(target.position);
+        }
     }
 }
