@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 3601966363704743894}
   - component: {fileID: 7660321850976533385}
   - component: {fileID: 8433414742436988560}
+  - component: {fileID: 4925779498425779576}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -216,11 +217,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KeyBeginMagic: 103
-  KeyFire: 49
-  FireProjecile: {fileID: 0}
-  Spawn: {fileID: 0}
-  FireRate: 0.5
-  NextFire: 0
+--- !u!114 &4925779498425779576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7660321850976533426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37f261d93190fe84d89440637e26eacf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointsCount: 100
 --- !u!1 &7660321851423239918
 GameObject:
   m_ObjectHideFlags: 0
