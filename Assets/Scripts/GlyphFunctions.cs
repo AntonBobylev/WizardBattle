@@ -12,7 +12,7 @@ public static class GlyphFunctions
     }
     public static void blink(GameObject whoami)
     {
-        Vector3 vec = whoami.transform.position + whoami.transform.TransformVector(whoami.transform.Find("Model").forward) * 6;
+        Vector3 vec = whoami.transform.position + whoami.transform.TransformVector(whoami.transform.Find("Capsule").forward) * 6;
         whoami.transform.position = vec;
         Debug.Log("BLINK GLYPH ACTION");
     }

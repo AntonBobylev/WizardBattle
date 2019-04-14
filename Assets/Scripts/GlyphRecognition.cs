@@ -69,7 +69,7 @@ public class GlyphRecognition: MonoBehaviour
                 Debug.Log("Glyph name: " + tuple.Item2.glyphName);
                 if (tuple.Item2.glyphName.Length != 0)
                 {
-                    Type.GetType("GlyphFunctions").GetMethod(tuple.Item2.glyphName).Invoke(null, new object[] { this.gameObject });
+                    Type.GetType("GlyphFunctions").GetMethod(tuple.Item2.glyphName).Invoke(null, new object[] { gameObject });
                 }
                 yield break;
             }
