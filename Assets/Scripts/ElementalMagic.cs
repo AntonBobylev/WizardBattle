@@ -25,7 +25,9 @@ namespace Magic
 public class ElementalMagic : MonoBehaviour
 {
     ///<summary> накастованная комбинация </summary>
-    private int chosenElement, chosenShape, chosenTarget;
+    private Magic.Elements chosenElement;
+    private Magic.Shapes chosenShape;
+    private Magic.Targets chosenTarget;
     ///<summary> состояние скрипта </summary>
     private ScriptStates state = ScriptStates.waitingStart;
     ///<summary> кнопка активации скрипта (TODO: пересмотреть алгоритм, чтобы избавиться от кнопки активации) </summary>
@@ -45,29 +47,27 @@ public class ElementalMagic : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(state);
-        //Debug it
-        if( state == ScriptStates.waitingStart && Input.GetKeyDown(activateButton))
+        if( (state == ScriptStates.waitingStart) && Input.GetKeyDown(activateButton))
         {
             state++;
+            Debug.Log(state);
             StartCoroutine(CastSpell());
         }
-        else if(state == ScriptStates.readyToUse && Input.GetKeyDown(releaseButton))
+        else if( (state == ScriptStates.readyToUse) && Input.GetKeyDown(releaseButton))
         {
             //Создание экземпляра класса выбранного элемента магии
-            Element element = (Element)Type.GetType(Enum.GetName(typeof(Magic.Elements), chosenElement))
+            Element element = (Fire)Type.GetType( chosenElement.ToString() )
                 .GetConstructor(new Type[1] { typeof(GameObject) })
                 .Invoke(new object[] { gameObject });
 
-            element.ParseCast((Magic.Shapes)chosenShape, (Magic.Targets)chosenTarget);
-            chosenElement = chosenShape = chosenTarget = -1;
+            element.ParseCast(chosenShape, chosenTarget);
             state = ScriptStates.waitingStart;
         }
     }
 
     IEnumerator CastSpell()
     {
-        while(state != ScriptStates.readyToUse || state != ScriptStates.waitingStart)
+        while( (state != ScriptStates.readyToUse) && (state != ScriptStates.waitingStart) )
         {
             InputMode();
             yield return null;
@@ -85,21 +85,22 @@ public class ElementalMagic : MonoBehaviour
         }
         if (keyIndex == binds.Length)
             return;
-        //TODO: добавить ограничение keyIndex
         //TODO: придумать что-нибудь вместо switch
         //TODO: обработать cancel button
         switch(state)
         {
             case ScriptStates.waitingElement:
-                chosenElement = keyIndex;
+                Enum.TryParse(keyIndex.ToString(), out chosenElement);  //false if uncorrect key. TODO: process it
+                Debug.Log(++state);
                 break;
             case ScriptStates.waitingShape:
-                chosenShape = keyIndex;
+                Enum.TryParse(keyIndex.ToString(), out chosenShape);
+                Debug.Log(++state);
                 break;
             case ScriptStates.waitingTarget:
-                chosenTarget = keyIndex;
+                Enum.TryParse(keyIndex.ToString(), out chosenTarget);
+                Debug.Log(++state);
                 break;
         }
-        state++;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using UnityEngine;
 
 public abstract class Element
@@ -10,11 +11,10 @@ public abstract class Element
     }
     public virtual void ParseCast(Magic.Shapes _shape, Magic.Targets _target)
     {
-        //Debug it
-        var method = GetType().GetMethod(Enum.GetName(typeof(Magic.Shapes), _shape) + Enum.GetName(typeof(Magic.Targets), _target));
+        MethodInfo method = GetType().GetMethod(_shape.ToString() + _target.ToString());
         if (method != null)
         {
-            method.Invoke(null, null);
+            method.Invoke(this, null);
         }
         else
         {
@@ -29,21 +29,35 @@ public abstract class Element
 
 public class Fire : Element
 {
-    public Fire(GameObject _caster) : base(_caster)
-    {
-
-    }
-
-    void StreamForward()
+    public Fire(GameObject _caster) : base(_caster) {}
+    
+    public void StreamForward()
     {
         Debug.Log("Fire Stream Forward");
     }
-    void ProjectileForward()
+    public void ProjectileForward()
     {
         Debug.Log("Fire Projectile Forward");
     }
-    void ProjectileAround()
+    public void ProjectileAround()
     {
         Debug.Log("Fire Projectile Around");
+    }
+}
+public class Frost : Element
+{
+    public Frost(GameObject _caster) : base(_caster) { }
+
+    public void StreamForward()
+    {
+        Debug.Log("Frost Stream Forward");
+    }
+    public void ProjectileForward()
+    {
+        Debug.Log("Frost Projectile Forward");
+    }
+    public void ProjectileAround()
+    {
+        Debug.Log("Frost Projectile Around");
     }
 }
